@@ -1,0 +1,96 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+.wrapper {
+  height: 100%;
+}
+
+@keyframes rotate {
+  100% {
+    background-position: 15% 50%;
+  }
+}
+
+body {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0 24px;
+  background-image: url("../Images/friends.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Euclid Circular A";
+  color: #000;
+  animation: rotate 6s infinite alternate linear;
+}
+
+@media (width >= 500px) {
+  body {
+    padding: 0;
+  }
+}
+
+.reg-card {
+  position:relative;
+  width: 100%;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 1.25rem;
+  background-color: transparent;
+  backdrop-filter: brightness(60%);
+  text-align: center;
+  left: 5cm;
+}
+
+@media (min-width: 500px) {
+  .reg-card {
+    margin: 50px auto 0;
+    width: 400px;
+  }
+}
+
+.reg-card>h2 {
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  margin-top: 0;
+}
+
+.reg-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.reg-form input {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.reg-form button {
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reg-form button:hover {
+  background-color: #0069d9;
+}
+
+.notmember {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.notmember a {
+  color: #007bff;
+}
