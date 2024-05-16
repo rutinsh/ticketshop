@@ -1,54 +1,71 @@
-<?php
-include("backend/Auth.php");
-require("backend/db_con.php");
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket Shop</title>
-    <link rel="stylesheet" href="index.css">
+    <title>Biļešu Bāze</title>
+
+    <!--Bootsrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link href="resources\CSS\index.css" rel="stylesheet">
 </head>
+
 <body>
-
-<header>
-    <div class="container">
-        <nav>
-            <ul>
-                <h1>Ticket Shop</h1>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Tickets</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<section id="hero">
-    <div class="container">
-        <h2>Welcome to our Ticket Shop!</h2>
-        <p>Find the best tickets for your favorite events.</p>
-        <a href="#" class="btn">Browse Tickets</a>
-    </div>
-</section>
-
-<section id="featured-tickets">
-    <div class="container">
-        <h2>Featured Tickets</h2>
-        <div class="ticket-grid">
-            <!-- Featured ticket items will be dynamically added here -->
+    <!--Navigācijas sākums-->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+          <a class="navbar-brand me-auto" href="#">Logo</a>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Logo</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link mx-lg-2 active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mx-lg-2" href="#">Par mums</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-lg-2" href="#">Koncerti</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mx-lg-2" href="#">Teātris</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mx-lg-2" href="#">Festivāli</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mx-lg-2" href="standup.php">Standup</a>
+                    <li class="nav-item">
+                        <a class="nav-link mx-lg-2" href="#">Citi</a>
+                      </li>
+                  </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <a href="login.php" class="login-button">Ienākt</a>
+          <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
         </div>
-    </div>
-</section>
+      </nav>
+      <!--Navigācijas beigas-->
 
-<footer>
-    <div class="container">
-        <p>&copy; 2024 Ticket Shop. All rights reserved.</p>
-    </div>
-</footer>
+      <section class="hero-section">
+            <div class="container d-flex align-items-center justify-content-center fs-1 text-white flex-column">
+
+            </div>
+      </section>
+
+    <!--Bootstrap JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
+
 </html>
