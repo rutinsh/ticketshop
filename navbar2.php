@@ -12,9 +12,6 @@
                     <a class="nav-link mx-lg-2" href="editkoncerti.php">Koncerti</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link mx-lg-2" href="editteatris.php">Teātris</a>
-                  </li>
-                  <li class="nav-item">
                     <a class="nav-link mx-lg-2" href="editfestivali.php">Festivāli</a>
                   </li>
                   <li class="nav-item">
