@@ -3,24 +3,24 @@
           <a class="navbar-brand me-auto" href="index.php">BiļešuBāze</a>
           <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">BiļešuBāze</h5>
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Logo</h5>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                 <li class="nav-item">
-                    <a class="nav-link mx-lg-2" href="koncerti.php">Koncerti</a>
+                    <a class="nav-link mx-lg-2" href="editkoncerti.php">Koncerti</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link mx-lg-2" href="teatris.php">Teātris</a>
+                    <a class="nav-link mx-lg-2" href="editteatris.php">Teātris</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link mx-lg-2" href="festivali.php">Festivāli</a>
+                    <a class="nav-link mx-lg-2" href="editfestivali.php">Festivāli</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link mx-lg-2" href="standup.php">Standup</a>
+                    <a class="nav-link mx-lg-2" href="editstandup.php">Standup</a>
                     <li class="nav-item">
-                        <a class="nav-link mx-lg-2" href="citi.php">Citi</a>
+                        <a class="nav-link mx-lg-2" href="editciti.php">Citi</a>
                       </li>
                   </li>
               </ul>

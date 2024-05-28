@@ -20,7 +20,7 @@ require("backend/db_con.php");
 </head>
 
 <body>
-<?php include 'navbar.php'; ?>
+<?php include 'navbar2.php'; ?>
 
       <section class="hero-section">
             <div class="container d-flex align-items-center justify-content-center fs-1 text-white flex-column">

@@ -32,7 +32,7 @@
                   // Verify the hashed password
                   if(password_verify($Parole, $user['Parole'])) {
                     $_SESSION['email'] = $Epasts;
-                    if($user['Admins'] == 1) {
+                    if($user['admin'] == 1) {
                       header('Location: admin.php');
                     } else {
                       header('Location: index.php');
