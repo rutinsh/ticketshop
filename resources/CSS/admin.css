@@ -248,11 +248,3 @@
     font-size: 16px;
     transition: background-color 0.3s ease;
   }
-
-  #profileDropdown {
-    color: #666777;
-}
-
-#profileDropdown:hover {
-    color: #000;
-}
