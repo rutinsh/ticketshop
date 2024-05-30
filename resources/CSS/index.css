@@ -98,3 +98,29 @@
 .hero-section h2 {
     font-size: 1.2em;
 }
+
+.events-section {
+    background-color: #f8f9fa;
+}
+
+.events-section h2 {
+    font-size: 2rem;
+}
+
+.events-section .card {
+    transition: transform 0.2s;
+}
+
+.events-section .card:hover {
+    transform: scale(1.05);
+}
+
+.events-section .card img {
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.events-section .btn-group .dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+}

@@ -124,7 +124,7 @@ if (isset($_GET['EditKoncertiID'])) {
     </style>
 </head>
 <body>
-<?php include 'navbar2.php'; ?>
+<?php include 'navbar2.php' ?> 
 
 <section class="hero-section">
     <div class="Fields">

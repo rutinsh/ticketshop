@@ -4,6 +4,7 @@
     margin: 20px;
     border-radius: 16px;
     padding: 0.5rem;
+    z-index: 2;
 
 }
 
@@ -69,8 +70,7 @@
 }
 
 .hero-section {
-    background: url(../Images/hero-bg.png) no-repeat center;
-    background-size: cover;
+
     width:100%;
     height: 100vh;
 }
@@ -249,3 +249,10 @@
     transition: background-color 0.3s ease;
   }
 
+  #profileDropdown {
+    color: #666777;
+}
+
+#profileDropdown:hover {
+    color: #000;
+}
