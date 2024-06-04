@@ -7,7 +7,7 @@ require("backend/db_con.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biļešu Bāze</title>
+    <title>Biļešu Bāze - Festivāli</title>
 
     <!--Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -37,29 +37,18 @@ require("backend/db_con.php");
         </div>
         <div class="row" id="eventsContainer">
             <?php
-            $tables = ['koncerti', 'festivali', 'standup', 'citi'];
-            $events = [];
-            foreach ($tables as $table) {
-                $sql = "SELECT '$table' as EventType, Nosaukums, Datums, Laiks, Informacija, Cena, Plakats FROM $table";
-                $result = $connection->query($sql);
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        $events[] = $row;
-                    }
-                }
-            }
+            $sql = "SELECT Nosaukums, Datums, Laiks, Informacija, Cena, Plakats FROM festivali";
+            $result = $connection->query($sql);
 
-            if (count($events) > 0) {
-                usort($events, function($a, $b) {
-                    return strtotime($a["Datums"]) - strtotime($b["Datums"]);
-                });
-                foreach ($events as $event) {
-                    echo '<div class="col-md-4 mb-4 event-card" data-date="' . $event["Datums"] . '">';
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<div class="col-md-4 mb-4 event-card" data-date="' . $row["Datums"] . '">';
                     echo '  <div class="card h-100">';
-                    echo '    <img src="' . $event["Plakats"] . '" class="card-img-top" alt="Event Image">';                    echo '    <div class="card-body">';
-                    echo '      <h5 class="card-title">' . $event["Nosaukums"] . '</h5>';
-                    echo '      <p class="card-text">' . date("d.m.y", strtotime($event["Datums"])) . ' ' . $event["Laiks"] . '<br>' . $event["Informacija"] . '</p>';
-                    echo '      <p class="card-text text-primary">no ' . number_format($event["Cena"], 2) . ' EUR</p>';
+                    echo '    <img src="' . $row["Plakats"] . '" class="card-img-top" alt="Event Image">';
+                    echo '    <div class="card-body">';
+                    echo '      <h5 class="card-title">' . $row["Nosaukums"] . '</h5>';
+                    echo '      <p class="card-text">' . date("d.m.y", strtotime($row["Datums"])) . ' ' . $row["Laiks"] . '<br>' . $row["Informacija"] . '</p>';
+                    echo '      <p class="card-text text-primary">no ' . number_format($row["Cena"], 2) . ' EUR</p>';
                     echo '    </div>';
                     echo '  </div>';
                     echo '</div>';
@@ -92,7 +81,7 @@ require("backend/db_con.php");
             var order = $('#orderSelect').val();
             if (selectedDate || order) {
                 $.ajax({
-                    url: 'filter_events.php',
+                    url: 'filter_festivali.php',
                     type: 'POST',
                     data: { date: selectedDate, order: order },
                     success: function(response) {
@@ -106,7 +95,7 @@ require("backend/db_con.php");
             $('#datepicker').val('');
             $('#orderSelect').val('asc');
             $.ajax({
-                url: 'filter_events.php',
+                url: 'filter_festivali.php',
                 type: 'POST',
                 data: { date: '', order: 'asc' },
                 success: function(response) {

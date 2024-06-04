@@ -4,30 +4,20 @@ require("backend/db_con.php");
 if (isset($_POST['date']) && isset($_POST['order'])) {
     $date = $_POST['date'];
     $order = $_POST['order'] == 'desc' ? 'DESC' : 'ASC';
-    $tables = ['koncerti', 'festivali', 'standup', 'citi'];
     $events = [];
 
-    foreach ($tables as $table) {
-        if ($date) {
-            $sql = "SELECT '$table' as EventType, Nosaukums, Datums, Laiks, Informacija, Cena, Plakats FROM $table WHERE Datums = '$date' ORDER BY Datums $order";
-        } else {
-            $sql = "SELECT '$table' as EventType, Nosaukums, Datums, Laiks, Informacija, Cena, Plakats FROM $table ORDER BY Datums $order";
-        }
-        $result = $connection->query($sql);
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $events[] = $row;
-            }
+    if ($date) {
+        $sql = "SELECT Nosaukums, Datums, Laiks, Informacija, Cena, Plakats FROM koncerti WHERE Datums = '$date' ORDER BY Datums $order";
+    } else {
+        $sql = "SELECT Nosaukums, Datums, Laiks, Informacija, Cena, Plakats FROM koncerti ORDER BY Datums $order";
+    }
+    
+    $result = $connection->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $events[] = $row;
         }
     }
-
-    usort($events, function($a, $b) use ($order) {
-        if ($order == 'ASC') {
-            return strtotime($a["Datums"]) - strtotime($b["Datums"]);
-        } else {
-            return strtotime($b["Datums"]) - strtotime($a["Datums"]);
-        }
-    });
 
     if (count($events) > 0) {
         foreach ($events as $event) {

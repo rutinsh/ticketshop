@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require('backend/db_con.php');
 
 // Jauna citi izveide
