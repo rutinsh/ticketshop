@@ -14,6 +14,16 @@ require("backend/db_con.php");
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="resources/CSS/index.css" rel="stylesheet">
+    <style>
+        .event-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .event-card a:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
     <script src="script.js"></script>
 </head>
 
@@ -37,19 +47,21 @@ require("backend/db_con.php");
         </div>
         <div class="row" id="eventsContainer">
             <?php
-            $sql = "SELECT Nosaukums, Datums, Laiks, Informacija, Cena, Plakats FROM citi";
+            $sql = "SELECT CitiID, Nosaukums, Datums, Laiks, Informacija, Cena, Plakats FROM citi";
             $result = $connection->query($sql);
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo '<div class="col-md-4 mb-4 event-card" data-date="' . $row["Datums"] . '">';
+                    echo '<div class="col-md-4 mb-4 event-card" data-date="' . htmlspecialchars($row["Datums"]) . '">';
                     echo '  <div class="card h-100">';
-                    echo '    <img src="' . $row["Plakats"] . '" class="card-img-top" alt="Event Image">';
+                    echo '    <a href="citi_details.php?id=' . htmlspecialchars($row["CitiID"]) . '">';
+                    echo '    <img src="' . htmlspecialchars($row["Plakats"]) . '" class="card-img-top" alt="Event Image">';
                     echo '    <div class="card-body">';
-                    echo '      <h5 class="card-title">' . $row["Nosaukums"] . '</h5>';
-                    echo '      <p class="card-text">' . date("d.m.y", strtotime($row["Datums"])) . ' ' . $row["Laiks"] . '<br>' . $row["Informacija"] . '</p>';
+                    echo '      <h5 class="card-title">' . htmlspecialchars($row["Nosaukums"]) . '</h5>';
+                    echo '      <p class="card-text">' . date("d.m.y", strtotime($row["Datums"])) . ' ' . htmlspecialchars($row["Laiks"]) . '<br>' . htmlspecialchars($row["Informacija"]) . '</p>';
                     echo '      <p class="card-text text-primary">no ' . number_format($row["Cena"], 2) . ' EUR</p>';
                     echo '    </div>';
+                    echo '    </a>';
                     echo '  </div>';
                     echo '</div>';
                 }
