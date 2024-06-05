@@ -7,6 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_new'])) {
     $Datums = htmlspecialchars($_POST['Datums']);
     $Laiks = htmlspecialchars($_POST['Laiks']);
     $Informacija = htmlspecialchars($_POST['Informacija']);
+    $Cena = htmlspecialchars($_POST['Cena']);
+    $BilesuSkaits = htmlspecialchars($_POST['BilesuSkaits']);
     $imagePath = '';
 
     if (isset($_FILES['Plakats']) && $_FILES['Plakats']['error'] == 0) {
@@ -27,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_new'])) {
         }
     }
 
-    $stmt = $connection->prepare("INSERT INTO standup (Nosaukums, Datums, Laiks, Informacija, Plakats) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $Nosaukums, $Datums, $Laiks, $Informacija, $imagePath);
+    $stmt = $connection->prepare("INSERT INTO standup (Nosaukums, Datums, Laiks, Informacija, Cena, BilesuSkaits, Plakats) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $Nosaukums, $Datums, $Laiks, $Informacija,$Cena, $BilesuSkaits, $imagePath);
 
     if ($stmt->execute()) {
         header('Location: editstandup.php');
@@ -47,6 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
     $Datums = htmlspecialchars($_POST['Datums']);
     $Laiks = htmlspecialchars($_POST['Laiks']);
     $Informacija = htmlspecialchars($_POST['Informacija']);
+    $Cena = htmlspecialchars($_POST['Cena']);
+    $BilesuSkaits = htmlspecialchars($_POST['BilesuSkaits']);
     $imagePath = htmlspecialchars($_POST['existingPlakats']);
 
     if (isset($_FILES['Plakats']) && $_FILES['Plakats']['error'] == 0) {
@@ -67,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
         }
     }
 
-    $stmt = $connection->prepare("UPDATE standup SET Nosaukums = ?, Datums = ?, Laiks = ?, Informacija = ?, Plakats = ? WHERE StandupID = ?");
-    $stmt->bind_param("sssssi", $Nosaukums, $Datums, $Laiks, $Informacija, $imagePath, $StandupID);
+    $stmt = $connection->prepare("UPDATE standup SET Nosaukums = ?, Datums = ?, Laiks = ?, Informacija = ?,Cena = ?, BilesuSkaits = ?, Plakats = ? WHERE StandupID = ?");
+    $stmt->bind_param("sssssi", $Nosaukums, $Datums, $Laiks, $Informacija,$Cena, $BilesuSkaits, $imagePath, $StandupID);
 
     if ($stmt->execute()) {
         header('Location: editstandup.php');
@@ -135,6 +139,8 @@ if (isset($_GET['EditStandupID'])) {
                 <input name="Datums" type="date" class="form-control mb-2" placeholder="Datums" required value="<?php echo isset($editStand) ? $editStand['Datums'] : ''; ?>">
                 <input name="Laiks" type="time" class="form-control mb-2" placeholder="Laiks" required value="<?php echo isset($editStand) ? $editStand['Laiks'] : ''; ?>">
                 <input name="Informacija" type="text" class="form-control mb-2" placeholder="Informācija" required value="<?php echo isset($editStand) ? $editStand['Informacija'] : ''; ?>">
+                <input name="Cena" type="number" step="0.01" class="form-control mb-2" placeholder="Cena" required value="<?php echo isset($editStand) ? $editStand['Cena'] : ''; ?>">
+                <input name="BilesuSkaits" type="number" class="form-control mb-2" placeholder="Biļešu skaits" required value="<?php echo isset($editStand) ? $editStand['BilesuSkaits'] : ''; ?>">
                 <input name="Plakats" type="file" class="form-control mb-2">
                 <?php if (isset($editStand)): ?>
                     <input type="hidden" name="StandupID" value="<?php echo $editStand['StandupID']; ?>">
@@ -164,6 +170,8 @@ if (isset($_GET['EditStandupID'])) {
                         <p class="card-text"><strong>Datums:</strong> <?php echo $row['Datums']; ?></p>
                         <p class="card-text"><strong>Laiks:</strong> <?php echo $row['Laiks']; ?></p>
                         <p class="card-text"><strong>Informācija:</strong> <?php echo $row['Informacija']; ?></p>
+                        <p class="card-text"><strong>Cena:</strong> <?php echo number_format($row['Cena'], 2); ?> EUR</p>
+                        <p class="card-text"><strong>Biļešu skaits:</strong> <?php echo $row['BilesuSkaits']; ?></p>
                         <a href="editstandup.php?EditStandupID=<?php echo $row['StandupID']; ?>" class="btn btn-warning">Labot</a>
                         <a href="backend/functions.php?StandupID=<?php echo $row['StandupID']; ?>" class="btn btn-danger">Dzēst</a>
                     </div>

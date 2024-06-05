@@ -7,6 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_new'])) {
     $Datums = htmlspecialchars($_POST['Datums']);
     $Laiks = htmlspecialchars($_POST['Laiks']);
     $Informacija = htmlspecialchars($_POST['Informacija']);
+    $Cena = htmlspecialchars($_POST['Cena']);
+    $BilesuSkaits = htmlspecialchars($_POST['BilesuSkaits']);
     $imagePath = '';
 
     if (isset($_FILES['Plakats']) && $_FILES['Plakats']['error'] == 0) {
@@ -27,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_new'])) {
         }
     }
 
-    $stmt = $connection->prepare("INSERT INTO citi (Nosaukums, Datums, Laiks, Informacija, Plakats) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $Nosaukums, $Datums, $Laiks, $Informacija, $imagePath);
+    $stmt = $connection->prepare("INSERT INTO citi (Nosaukums, Datums, Laiks, Informacija, Cena, BilesuSkaits, Plakats) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $Nosaukums, $Datums, $Laiks, $Informacija, $Cena, $BilesuSkaits, $imagePath);
 
     if ($stmt->execute()) {
         header('Location: editciti.php');
@@ -47,6 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
     $Datums = htmlspecialchars($_POST['Datums']);
     $Laiks = htmlspecialchars($_POST['Laiks']);
     $Informacija = htmlspecialchars($_POST['Informacija']);
+    $Cena = htmlspecialchars($_POST['Cena']);
+    $BilesuSkaits = htmlspecialchars($_POST['BilesuSkaits']);
     $imagePath = htmlspecialchars($_POST['existingPlakats']);
 
     if (isset($_FILES['Plakats']) && $_FILES['Plakats']['error'] == 0) {
@@ -67,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
         }
     }
 
-    $stmt = $connection->prepare("UPDATE citii SET Nosaukums = ?, Datums = ?, Laiks = ?, Informacija = ?, Plakats = ? WHERE CitiID = ?");
-    $stmt->bind_param("sssssi", $Nosaukums, $Datums, $Laiks, $Informacija, $imagePath, $CitiID);
+    $stmt = $connection->prepare("UPDATE citi SET Nosaukums = ?, Datums = ?, Laiks = ?, Informacija = ?,Cena = ?, BilesuSkaits = ?, Plakats = ? WHERE CitiID = ?");
+    $stmt->bind_param("sssssi", $Nosaukums, $Datums, $Laiks, $Informacija, $Cena, $BilesuSkaits, $imagePath, $CitiID);
 
     if ($stmt->execute()) {
         header('Location: editciti.php');
@@ -135,9 +139,11 @@ if (isset($_GET['EditCitiID'])) {
                 <input name="Datums" type="date" class="form-control mb-2" placeholder="Datums" required value="<?php echo isset($editCit) ? $editCit['Datums'] : ''; ?>">
                 <input name="Laiks" type="time" class="form-control mb-2" placeholder="Laiks" required value="<?php echo isset($editCit) ? $editCit['Laiks'] : ''; ?>">
                 <input name="Informacija" type="text" class="form-control mb-2" placeholder="Informācija" required value="<?php echo isset($editCit) ? $editCit['Informacija'] : ''; ?>">
+                <input name="Cena" type="number" step="0.01" class="form-control mb-2" placeholder="Cena" required value="<?php echo isset($editCit) ? $editCit['Cena'] : ''; ?>">
+                <input name="BilesuSkaits" type="number" class="form-control mb-2" placeholder="Biļešu skaits" required value="<?php echo isset($editCit) ? $editCit['BilesuSkaits'] : ''; ?>">
                 <input name="Plakats" type="file" class="form-control mb-2">
                 <?php if (isset($editCit)): ?>
-                    <input type="hidden" name="CitiID" value="<?php echo $editCitt['CitiID']; ?>">
+                    <input type="hidden" name="CitiID" value="<?php echo $editCit['CitiID']; ?>">
                     <input type="hidden" name="existingPlakats" value="<?php echo $editCit['Plakats']; ?>">
                     <input class="btn btn-warning mb-2" name="submit_edit" type="submit" value="Labot">
                 <?php else: ?>
@@ -164,6 +170,8 @@ if (isset($_GET['EditCitiID'])) {
                         <p class="card-text"><strong>Datums:</strong> <?php echo $row['Datums']; ?></p>
                         <p class="card-text"><strong>Laiks:</strong> <?php echo $row['Laiks']; ?></p>
                         <p class="card-text"><strong>Informācija:</strong> <?php echo $row['Informacija']; ?></p>
+                        <p class="card-text"><strong>Cena:</strong> <?php echo number_format($row['Cena'], 2); ?> EUR</p>
+                        <p class="card-text"><strong>Biļešu skaits:</strong> <?php echo $row['BilesuSkaits']; ?></p>
                         <a href="editciti.php?EditCitiID=<?php echo $row['CitiID']; ?>" class="btn btn-warning">Labot</a>
                         <a href="backend/functions.php?CitiID=<?php echo $row['CitiID']; ?>" class="btn btn-danger">Dzēst</a>
                     </div>
