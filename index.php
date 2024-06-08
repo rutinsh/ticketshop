@@ -15,6 +15,16 @@ require("backend/db_con.php");
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="resources/CSS/index.css" rel="stylesheet">
     <script src="script.js"></script>
+    <style>
+        .event-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .event-card a:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
 </head>
 
 <body>
@@ -40,7 +50,8 @@ require("backend/db_con.php");
             $tables = ['koncerti', 'festivali', 'standup', 'citi'];
             $events = [];
             foreach ($tables as $table) {
-                $sql = "SELECT '$table' as EventType, Nosaukums, Datums, Laiks, Informacija, Cena, Plakats FROM $table";
+                $idField = ucfirst($table) . 'ID';
+                $sql = "SELECT '$table' as EventType, $idField as ID, Nosaukums, Datums, Laiks, Informacija, Cena, Plakats FROM $table";
                 $result = $connection->query($sql);
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
@@ -54,13 +65,27 @@ require("backend/db_con.php");
                     return strtotime($a["Datums"]) - strtotime($b["Datums"]);
                 });
                 foreach ($events as $event) {
-                    echo '<div class="col-md-4 mb-4 event-card" data-date="' . $event["Datums"] . '">';
+                    $detailPage = "";
+                    if ($event["EventType"] == 'koncerti') {
+                        $detailPage = "concert_details.php";
+                    } elseif ($event["EventType"] == 'festivali') {
+                        $detailPage = "festival_details.php";
+                    } elseif ($event["EventType"] == 'standup') {
+                        $detailPage = "standup_details.php";
+                    } elseif ($event["EventType"] == 'citi') {
+                        $detailPage = "citi_details.php";
+                    }
+
+                    echo '<div class="col-md-4 mb-4 event-card" data-date="' . htmlspecialchars($event["Datums"]) . '">';
                     echo '  <div class="card h-100">';
-                    echo '    <img src="' . $event["Plakats"] . '" class="card-img-top" alt="Event Image">';                    echo '    <div class="card-body">';
-                    echo '      <h5 class="card-title">' . $event["Nosaukums"] . '</h5>';
-                    echo '      <p class="card-text">' . date("d.m.y", strtotime($event["Datums"])) . ' ' . $event["Laiks"] . '<br>' . $event["Informacija"] . '</p>';
-                    echo '      <p class="card-text text-primary">no ' . number_format($event["Cena"], 2) . ' EUR</p>';
-                    echo '    </div>';
+                    echo '    <a href="' . $detailPage . '?id=' . htmlspecialchars($event["ID"]) . '">';
+                    echo '      <img src="' . htmlspecialchars($event["Plakats"]) . '" class="card-img-top" alt="Event Image">';
+                    echo '      <div class="card-body">';
+                    echo '        <h5 class="card-title">' . htmlspecialchars($event["Nosaukums"]) . '</h5>';
+                    echo '        <p class="card-text">' . date("d.m.y", strtotime($event["Datums"])) . ' ' . htmlspecialchars($event["Laiks"]) . '<br>' . htmlspecialchars($event["Informacija"]) . '</p>';
+                    echo '        <p class="card-text text-primary">no ' . number_format($event["Cena"], 2) . ' EUR</p>';
+                    echo '      </div>';
+                    echo '    </a>';
                     echo '  </div>';
                     echo '</div>';
                 }

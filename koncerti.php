@@ -18,12 +18,14 @@ require("backend/db_con.php");
         .event-card a {
             text-decoration: none;
             color: inherit;
+            display: block;
         }
         .event-card a:hover {
             text-decoration: none;
             color: inherit;
         }
     </style>
+
     <script src="script.js"></script>
 </head>
 
@@ -55,7 +57,7 @@ require("backend/db_con.php");
                     echo '<div class="col-md-4 mb-4 event-card" data-date="' . htmlspecialchars($row["Datums"]) . '">';
                     echo '  <div class="card h-100">';
                     echo '    <a href="concert_details.php?id=' . htmlspecialchars($row["KoncertiID"]) . '">';
-                    echo '    <img src="' . $row["Plakats"] . '" class="card-img-top" alt="Event Image">';
+                    echo '      <img src="' . htmlspecialchars($row["Plakats"]) . '" class="card-img-top" alt="Event Image">';
                     echo '      <div class="card-body">';
                     echo '        <h5 class="card-title">' . htmlspecialchars($row["Nosaukums"]) . '</h5>';
                     echo '        <p class="card-text">' . date("d.m.y", strtotime($row["Datums"])) . ' ' . htmlspecialchars($row["Laiks"]) . '<br>' . htmlspecialchars($row["Informacija"]) . '</p>';
@@ -120,3 +122,4 @@ require("backend/db_con.php");
 
 </body>
 </html>
+
