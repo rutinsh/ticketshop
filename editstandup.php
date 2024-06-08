@@ -1,5 +1,7 @@
 <?php
 require('backend/db_con.php');
+include 'backend/functions.php';
+checkAdmin();
 
 // Jauna standup izveide
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_new'])) {
@@ -29,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_new'])) {
         }
     }
 
-    $stmt = $connection->prepare("INSERT INTO standup (Nosaukums, Datums, Laiks, Informacija, Cena, BilesuSkaits, Plakats) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $Nosaukums, $Datums, $Laiks, $Informacija,$Cena, $BilesuSkaits, $imagePath);
+    $stmt = $connection->prepare("INSERT INTO standup (Nosaukums, Datums, Laiks, Informacija, Cena, BilesuSkaits, Plakats) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssds", $Nosaukums, $Datums, $Laiks, $Informacija, $Cena, $BilesuSkaits, $imagePath);
 
     if ($stmt->execute()) {
         header('Location: editstandup.php');
@@ -71,8 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
         }
     }
 
-    $stmt = $connection->prepare("UPDATE standup SET Nosaukums = ?, Datums = ?, Laiks = ?, Informacija = ?,Cena = ?, BilesuSkaits = ?, Plakats = ? WHERE StandupID = ?");
-    $stmt->bind_param("sssssi", $Nosaukums, $Datums, $Laiks, $Informacija,$Cena, $BilesuSkaits, $imagePath, $StandupID);
+    $stmt = $connection->prepare("UPDATE standup SET Nosaukums = ?, Datums = ?, Laiks = ?, Informacija = ?, Cena = ?, BilesuSkaits = ?, Plakats = ? WHERE StandupID = ?");
+    $stmt->bind_param("ssssdisi", $Nosaukums, $Datums, $Laiks, $Informacija, $Cena, $BilesuSkaits, $imagePath, $StandupID);
 
     if ($stmt->execute()) {
         header('Location: editstandup.php');

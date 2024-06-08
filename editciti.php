@@ -1,7 +1,9 @@
 <?php
 require('backend/db_con.php');
+include 'backend/functions.php';
+checkAdmin();
 
-// Jauna citi izveide
+// Jauna pasākuma izveide
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_new'])) {
     $Nosaukums = htmlspecialchars($_POST['Nosaukums']);
     $Datums = htmlspecialchars($_POST['Datums']);
@@ -29,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_new'])) {
         }
     }
 
-    $stmt = $connection->prepare("INSERT INTO citi (Nosaukums, Datums, Laiks, Informacija, Cena, BilesuSkaits, Plakats) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $Nosaukums, $Datums, $Laiks, $Informacija, $Cena, $BilesuSkaits, $imagePath);
+    $stmt = $connection->prepare("INSERT INTO citi (Nosaukums, Datums, Laiks, Informacija, Cena, BilesuSkaits, Plakats) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssds", $Nosaukums, $Datums, $Laiks, $Informacija, $Cena, $BilesuSkaits, $imagePath);
 
     if ($stmt->execute()) {
         header('Location: editciti.php');
@@ -42,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_new'])) {
     $stmt->close();
 }
 
-// Esošā citi labošana
+// Esošā pasākuma labošana
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
     $CitiID = htmlspecialchars($_POST['CitiID']);
     $Nosaukums = htmlspecialchars($_POST['Nosaukums']);
@@ -71,8 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
         }
     }
 
-    $stmt = $connection->prepare("UPDATE citi SET Nosaukums = ?, Datums = ?, Laiks = ?, Informacija = ?,Cena = ?, BilesuSkaits = ?, Plakats = ? WHERE CitiID = ?");
-    $stmt->bind_param("sssssi", $Nosaukums, $Datums, $Laiks, $Informacija, $Cena, $BilesuSkaits, $imagePath, $CitiID);
+    $stmt = $connection->prepare("UPDATE citi SET Nosaukums = ?, Datums = ?, Laiks = ?, Informacija = ?, Cena = ?, BilesuSkaits = ?, Plakats = ? WHERE CitiID = ?");
+    $stmt->bind_param("ssssdisi", $Nosaukums, $Datums, $Laiks, $Informacija, $Cena, $BilesuSkaits, $imagePath, $CitiID);
 
     if ($stmt->execute()) {
         header('Location: editciti.php');
@@ -84,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
     $stmt->close();
 }
 
-// Citi datu ieguve tālākai apstrādāšanai
+// Pasākumu datu ieguve tālākai apstrādāšanai
 $editCit = null;
 if (isset($_GET['EditCitiID'])) {
     $CitiID = intval($_GET['EditCitiID']);

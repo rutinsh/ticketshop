@@ -1,5 +1,7 @@
 <?php
 require('backend/db_con.php');
+include 'backend/functions.php';
+checkAdmin();
 
 // Jauna Festivāla izveide
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_new'])) {
@@ -29,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_new'])) {
         }
     }
 
-    $stmt = $connection->prepare("INSERT INTO festivali (Nosaukums, Datums, Laiks, Informacija, Cena, BilesuSkaits, Plakats) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $Nosaukums, $Datums, $Laiks, $Informacija,$Cena, $BilesuSkaits, $imagePath);
+    $stmt = $connection->prepare("INSERT INTO festivali (Nosaukums, Datums, Laiks, Informacija, Cena, BilesuSkaits, Plakats) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssdis", $Nosaukums, $Datums, $Laiks, $Informacija, $Cena, $BilesuSkaits, $imagePath);
 
     if ($stmt->execute()) {
         header('Location: editfestivali.php');
@@ -72,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
     }
 
     $stmt = $connection->prepare("UPDATE festivali SET Nosaukums = ?, Datums = ?, Laiks = ?, Informacija = ?, Cena = ?, BilesuSkaits = ?, Plakats = ? WHERE FestivaliID = ?");
-    $stmt->bind_param("sssssi", $Nosaukums, $Datums, $Laiks, $Informacija, $Cena, $BilesuSkaits, $imagePath, $FestivaliID);
+    $stmt->bind_param("ssssdisi", $Nosaukums, $Datums, $Laiks, $Informacija, $Cena, $BilesuSkaits, $imagePath, $FestivaliID);
 
     if ($stmt->execute()) {
         header('Location: editfestivali.php');

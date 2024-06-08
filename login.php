@@ -34,6 +34,7 @@ session_start();
                     $_SESSION['email'] = $Epasts;
                     $_SESSION['email'] = $user['Epasts'];
                     $_SESSION['name'] = $user['Vards'];
+                    $_SESSION['admin'] = $user['admin'];
                     if($user['admin'] == 1) {
                       header('Location: admin.php');
                     } else {

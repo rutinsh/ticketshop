@@ -1,6 +1,7 @@
 <?php
 require("backend/db_con.php");
-
+include 'backend/functions.php';
+checkAdmin();
 ?>
 
 
