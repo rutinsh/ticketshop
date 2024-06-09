@@ -23,7 +23,7 @@ if ($result->num_rows > 0) {
         echo '      <img src="' . htmlspecialchars($row["Plakats"]) . '" class="card-img-top" alt="Event Image">';
         echo '      <div class="card-body">';
         echo '        <h5 class="card-title">' . htmlspecialchars($row["Nosaukums"]) . '</h5>';
-        echo '        <p class="card-text">' . date("d.m.y", strtotime($row["Datums"])) . ' ' . htmlspecialchars($row["Laiks"]) . '<br>' . htmlspecialchars($row["Informacija"]) . '</p>';
+        echo '        <p class="card-text">' . date("d.m.Y", strtotime($row["Datums"])) . ' ' . htmlspecialchars($row["Laiks"]) . '<br>' . htmlspecialchars($row["Informacija"]) . '</p>';
         echo '        <p class="card-text text-primary">no ' . number_format($row["Cena"], 2) . ' EUR</p>';
         echo '      </div>';
         echo '    </a>';

@@ -124,3 +124,22 @@
     max-height: 200px;
     overflow-y: auto;
 }
+
+.btn-buy {
+    background-color: #28a745;
+    color: #fff;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    width: 150px; /* Ensures the button width only fits the text */
+    text-align: center; /* Ensures the text is centered */
+}
+
+
+.btn-buy:hover {
+    background-color: #218838;
+    color: #fff;
+}

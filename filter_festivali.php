@@ -27,7 +27,7 @@ if (isset($_POST['date']) && isset($_POST['order'])) {
             echo '      <img src="' . htmlspecialchars($event["Plakats"]) . '" class="card-img-top" alt="Event Image">';
             echo '      <div class="card-body">';
             echo '        <h5 class="card-title">' . htmlspecialchars($event["Nosaukums"]) . '</h5>';
-            echo '        <p class="card-text">' . date("d.m.y", strtotime($event["Datums"])) . ' ' . htmlspecialchars($event["Laiks"]) . '<br>' . htmlspecialchars($event["Informacija"]) . '</p>';
+            echo '        <p class="card-text">' . date("d.m.Y", strtotime($event["Datums"])) . ' ' . htmlspecialchars($event["Laiks"]) . '<br>' . htmlspecialchars($event["Informacija"]) . '</p>';
             echo '        <p class="card-text text-primary">no ' . number_format($event["Cena"], 2) . ' EUR</p>';
             echo '      </div>';
             echo '    </a>';

@@ -36,7 +36,7 @@ session_start();
                     $_SESSION['name'] = $user['Vards'];
                     $_SESSION['admin'] = $user['admin'];
                     if($user['admin'] == 1) {
-                      header('Location: admin.php');
+                      header('Location: editkoncerti.php');
                     } else {
                       header('Location: index.php');
                     }

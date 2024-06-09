@@ -31,14 +31,14 @@ function DelKoncerts()
     mysqli_close($connection);
 }
 
-if (isset($_GET['ID'])) {
+if (isset($_GET['StandupID'])) {
     DelStandup();
 }
 
 function DelStandup()
 {
     include 'db_con.php';
-    $sql = "DELETE FROM standup WHERE StandupID='" . $_GET["StandupiID"] . "'";
+    $sql = "DELETE FROM standup WHERE StandupID='" . $_GET["StandupID"] . "'";
     if (mysqli_query($connection, $sql)) {
         header("Location: ../editstandup.php");
     } else {
@@ -47,8 +47,7 @@ function DelStandup()
     mysqli_close($connection);
 }
 
-
-if (isset($_GET['ID'])) {
+if (isset($_GET['CitiID'])) {
     DelCiti();
 }
 
@@ -71,5 +70,4 @@ function checkAdmin() {
         exit();
     }
 }
-
 ?>
