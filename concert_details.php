@@ -93,7 +93,7 @@ $row = $result->fetch_assoc();
                     <p><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row["Informacija"]); ?></p>
                 </div>
                 <p class="price">no <?php echo number_format($row["Cena"], 2); ?> EUR</p>
-                <button class="btn-buy"><i class="fas fa-ticket-alt"></i> Nopirkt biļeti</button>
+                <a href="purchase.php?id=<?php echo $eventID; ?>" class="btn-buy"><i class="fas fa-ticket-alt"></i> Nopirkt biļeti</a>
             </div>
         </div>
     </div>
