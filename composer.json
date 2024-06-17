@@ -1,0 +1,9 @@
+{
+    "name": "rut1nsh/ticketshop",
+    "description": "Ticketshop project",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "stripe/stripe-php": "*"
+    }
+}

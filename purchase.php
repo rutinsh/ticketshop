@@ -1,10 +1,7 @@
 <?php
+session_start();
 require("backend/db_con.php");
-require 'stripe-php/init.php'; // Include the Stripe PHP library
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+require 'stripe-php/init.php';// Ensure this path is correct
 
 \Stripe\Stripe::setApiKey('sk_test_51PQxiHBLnvKcgRvnEyzwhZ14RqZQ147qXZe9EQsZcWh5P2JMp0f3YJkbVlkncr80Ux97U4I5e4qTW8oM3GFhoCu400Co9ZuqLK'); // Replace with your Stripe secret key
 
@@ -32,9 +29,8 @@ $row = $result->fetch_assoc();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($row["Nosaukums"]); ?></title>
 
-    <!-- Stripe.js -->
     <script src="https://js.stripe.com/v3/"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="resources/CSS/index.css" rel="stylesheet">
     <style>
@@ -120,76 +116,45 @@ $row = $result->fetch_assoc();
     </div>
     <div class="ticket-summary">
         <h2>Jūsu biļetes</h2>
-        <div class="form-group">
-            <label for="ticketQuantity">Biļešu skaits:</label>
-            <select id="ticketQuantity" class="form-control">
-                <option value="" selected disabled>Izvēlieties</option>
-                <?php for ($i = 1; $i <= 10; $i++): ?>
-                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                <?php endfor; ?>
-            </select>
-        </div>
-        <div class="price-details">
-            <p class="price">Cena: <?php echo number_format($row["Cena"], 2); ?> EUR</p>
-            <p class="total-price">Kopā: <span id="totalPrice"><?php echo number_format($row["Cena"], 2); ?></span></p>
-        </div>
-        <button id="checkout-button" class="btn-buy">Uz apmaksu</button>
+        <form action="create-checkout-session.php" method="POST">
+            <input type="hidden" name="eventID" value="<?php echo $eventID; ?>">
+            <input type="hidden" name="eventName" value="<?php echo htmlspecialchars($row["Nosaukums"]); ?>">
+            <input type="hidden" name="eventPrice" value="<?php echo $row["Cena"]; ?>">
+            <div class="form-group">
+                <label for="ticketQuantity">Biļešu skaits:</label>
+                <select id="ticketQuantity" name="quantity" class="form-control" required>
+                    <option value="" selected disabled>Izvēlieties</option>
+                    <?php for ($i = 1; $i <= 10; $i++): ?>
+                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+            <div class="price-details">
+                <p class="price">Cena: <?php echo number_format($row["Cena"], 2); ?> EUR</p>
+                <p class="total-price">Kopā: <span id="totalPrice"><?php echo number_format($row["Cena"], 2); ?></span></p>
+            </div>
+            <button type="submit" class="btn-buy">Uz apmaksu</button>
+        </form>
     </div>
 </section>
 
-<!-- Stripe Checkout Script -->
+<!-- Update total price on ticket quantity change -->
 <script>
-    var stripe = Stripe('pk_test_51PQxiHBLnvKcgRvnLGGkpcSF4sejT6kzySw78kvSRVC2BabzAd2w2yrsH5v6Hyi4PHJnwpYTc98jMxJ2N7lKnqkn002hwtazqs'); // Replace with your Stripe publishable key
-    var checkoutButton = document.getElementById('checkout-button');
     var ticketQuantity = document.getElementById('ticketQuantity');
     var totalPrice = document.getElementById('totalPrice');
     var priceDetails = document.querySelector('.price-details');
+    var price = <?php echo $row["Cena"]; ?>;
 
     ticketQuantity.addEventListener('change', function() {
-        var price = <?php echo $row["Cena"]; ?>;
         var quantity = ticketQuantity.value;
         var total = (price * quantity).toFixed(2);
         totalPrice.textContent = total + ' EUR';
         priceDetails.style.display = 'block';
     });
-
-    checkoutButton.addEventListener('click', function () {
-        if (!ticketQuantity.value) {
-            alert('Lūdzu, izvēlieties biļešu skaitu.');
-            return;
-        }
-
-        fetch('create-checkout-session.php', {  // Ensure this URL is correct
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-        price: <?php echo $row["Cena"] * 100; ?>,
-        name: "<?php echo htmlspecialchars($row["Nosaukums"]); ?>",
-        eventID: <?php echo $eventID; ?>,
-        quantity: ticketQuantity.value
-    }),
-})
-.then(function (response) {
-    return response.json();
-})
-.then(function (sessionId) {
-    if (sessionId.error) {
-        alert(sessionId.error);
-    } else {
-        window.location.href = 'checkout.php?session_id=' + sessionId.id;
-    }
-})
-.catch(function (error) {
-    console.error('Error:', error);
-});
-
-    });
 </script>
 
 <!--Bootstrap JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
