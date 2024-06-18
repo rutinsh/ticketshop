@@ -8,7 +8,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>BiļešuBāze</title>
@@ -114,8 +114,17 @@ if (session_status() == PHP_SESSION_NONE) {
         </div>
         <?php
                 if (isset($_SESSION['email'])) {
-                    echo '<a href="profile.php" id="profileIcon"><i class="fas fa-user-circle fa-3x"></i></a>
-                    <a href="logout.php" class="logout-button">Iziet</a>';
+                    echo '<ul class="navbar-nav flex-row align-items-center">
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2" href="tickets.php">Manas biļetes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="profile.php" id="profileIcon"><i class="fas fa-user-circle fa-3x"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="logout.php" class="logout-button">Iziet</a>
+                            </li>
+                          </ul>';
                 } else {
                     echo '<a href="login.php" class="login-button">Ienākt</a>';
                 }
@@ -131,6 +140,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
+
 
 
 

@@ -85,7 +85,7 @@ try {
 
     echo "Purchase successful and tickets saved.";
     // Redirect to index.php after successful payment
-    header("Location: index.php");
+    header("Location: tickets.php");
     exit;
 } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
